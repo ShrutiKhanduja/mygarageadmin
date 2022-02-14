@@ -62,12 +62,13 @@ class _SecondScreenState extends State<SecondScreen> {
                 SizedBox(
                   height: SizeConfig.deviceHeight * 0.032,
                 ),
-                CustomTextField(
-                  textEditingController: locationcontroller,
-                  textInputType: TextInputType.streetAddress,
-                  hintText: 'Location',
-                  icon: Icon(Icons.location_on),
-                ),
+                // CustomTextField(
+                //   textEditingController: locationcontroller,
+                //   textInputType: TextInputType.streetAddress,
+                //   hintText: 'Location',
+                //   icon: Icon(Icons.location_on),
+                // ),
+                const LocationTracker(),
                 SizedBox(
                   height: SizeConfig.deviceHeight * 0.032,
                 ),
@@ -99,7 +100,6 @@ class _SecondScreenState extends State<SecondScreen> {
                 SizedBox(
                   height: SizeConfig.deviceHeight * 0.032,
                 ),
-                // LocationTracker(),
               ],
             ),
           ),

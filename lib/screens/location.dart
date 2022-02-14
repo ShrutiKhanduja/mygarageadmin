@@ -13,10 +13,10 @@ class LocationTracker extends StatefulWidget {
 class _LocationTrackerState extends State<LocationTracker> {
   bool _isEditingText = false;
   late TextEditingController _editingController;
-  String initialText = "location";
+  String initialText = "Set Your Location";
 
-  String location = 'Null, Press Button';
-  String Address = 'search';
+  String location = 'Null';
+  String Address = '';
 
   Future<Position> _getGeoLocationPosition() async {
     bool serviceEnabled;
@@ -48,7 +48,7 @@ class _LocationTrackerState extends State<LocationTracker> {
     print(placemarks);
     Placemark place = placemarks[0];
     Address =
-        '${place.street},${place.locality}, ${place.administrativeArea},  ${place.country}';
+        '${place.street},${place.locality},${place.administrativeArea},${place.country}';
 
     setState(() {});
   }
@@ -58,7 +58,7 @@ class _LocationTrackerState extends State<LocationTracker> {
     // TODO: implement initState
     getAddress();
     super.initState();
-    _editingController = TextEditingController(text: initialText);
+    // _editingController = TextEditingController(text: initialText);
   }
 
   @override
@@ -79,43 +79,68 @@ class _LocationTrackerState extends State<LocationTracker> {
             });
           },
           autofocus: true,
-          controller: _editingController,
+          controller: TextEditingController(text: Address),
+          keyboardType: TextInputType.streetAddress,
+          obscureText: false,
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.location_on,
+              color: Colors.grey,
+            ),
+            border: OutlineInputBorder(
+                borderSide: Divider.createBorderSide(context)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: Divider.createBorderSide(context)),
+            enabledBorder: OutlineInputBorder(
+                borderSide: Divider.createBorderSide(context)),
+            hintText: 'Location',
+            filled: true,
+            contentPadding: EdgeInsets.all(8),
+          ),
         ),
       );
     return InkWell(
-        onTap: () {
-          setState(() {
-            _isEditingText = true;
-          });
-        },
-        child: Text(
-          initialText,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18.0,
+      onTap: () {
+        setState(() {
+          _isEditingText = true;
+        });
+      },
+      child: TextField(
+        autofocus: true,
+        controller: TextEditingController(text: Address),
+        keyboardType: TextInputType.streetAddress,
+        obscureText: false,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.location_on,
+            color: Colors.grey,
           ),
-        ));
+          border:
+              OutlineInputBorder(borderSide: Divider.createBorderSide(context)),
+          focusedBorder:
+              OutlineInputBorder(borderSide: Divider.createBorderSide(context)),
+          enabledBorder:
+              OutlineInputBorder(borderSide: Divider.createBorderSide(context)),
+          hintText: 'Detecting . . .',
+          filled: true,
+          contentPadding: EdgeInsets.all(8),
+        ),
+      ),
+      // Container(
+      //   padding: const EdgeInsets.symmetric(horizontal: 10),
+      //   decoration: BoxDecoration(),
+      //   child: Text(
+      //     initialText,
+      //     style:
+      //         TextStyle(color: Colors.black, fontSize: 16.0, letterSpacing: 1),
+      //   ),
+      // ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'ADDRESS',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text('${Address}'),
-        SizedBox(
-          height: 10,
-        ),
-        _editTitleTextField(),
-      ],
-    );
+    return _editTitleTextField();
   }
 
   Future<void> getAddress() async {
